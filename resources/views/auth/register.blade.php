@@ -61,6 +61,23 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3 form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
+                            <label for="gender" class="col-md-4 control-label text-md-right" style="margin-top: 1%">Gender</label>
+
+                            <div class="col-md-6">
+                            <select class="form-control" name="gender">
+                              <option value="0">Male</option>
+                              <option value="1">Female</option>
+                            </select>
+
+                            @if ($errors->has('gender'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('gender') }}</strong>
+                                </span>
+                            @endif
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
