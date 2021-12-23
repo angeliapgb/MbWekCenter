@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile', [App\Http\Controllers\PageController::class, 'profile'])->name('profile');
+Route::get('/transaction', [App\Http\Controllers\PageController::class, 'transaction'])->name('transaction');
+Route::get('/cart', [App\Http\Controllers\PageController::class, 'cart'])->name('cart');
+Route::get('/insert', [App\Http\Controllers\PageController::class, 'insert'])->name('insert');
+Route::get('/manage', [App\Http\Controllers\PageController::class, 'manage'])->name('manage');
+
+// Route::get('/profile/{id}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
+// Route::post('/profile/{id}', [App\Http\Controllers\HomeController::class, 'update'])->name('update');
