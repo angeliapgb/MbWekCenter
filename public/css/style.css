@@ -1,7 +1,10 @@
 .navbar {
     background-color: #6cb2eb;
-    color: white;
 }
+
+/* .nav-link a {
+    color: white;
+} */
 
 footer {
     text-align: center;

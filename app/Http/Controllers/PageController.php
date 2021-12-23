@@ -35,6 +35,10 @@ class PageController extends Controller
         return view('insert');
     }
 
+    public function update() {
+        return view('update');
+    }
+
     public function manage() {
         return view('manage');
     }

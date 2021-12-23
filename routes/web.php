@@ -24,6 +24,7 @@ Route::get('/profile', [App\Http\Controllers\PageController::class, 'profile'])-
 Route::get('/transaction', [App\Http\Controllers\PageController::class, 'transaction'])->name('transaction');
 Route::get('/cart', [App\Http\Controllers\PageController::class, 'cart'])->name('cart');
 Route::get('/insert', [App\Http\Controllers\PageController::class, 'insert'])->name('insert');
+Route::get('/update', [App\Http\Controllers\PageController::class, 'update'])->name('update');
 Route::get('/manage', [App\Http\Controllers\PageController::class, 'manage'])->name('manage');
 
 // Route::get('/profile/{id}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
