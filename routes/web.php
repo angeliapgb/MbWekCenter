@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +21,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/profile', [App\Http\Controllers\PageController::class, 'profile'])->name('profile');
-Route::get('/transaction', [App\Http\Controllers\PageController::class, 'transaction'])->name('transaction');
-Route::get('/cart', [App\Http\Controllers\PageController::class, 'cart'])->name('cart');
-Route::get('/insert', [App\Http\Controllers\PageController::class, 'insert'])->name('insert');
-Route::get('/update', [App\Http\Controllers\PageController::class, 'update'])->name('update');
-Route::get('/manage', [App\Http\Controllers\PageController::class, 'manage'])->name('manage');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/profile', [PageController::class, 'profile'])->name('profile');
+Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
+Route::get('/cart', [PageController::class, 'cart'])->name('cart');
+Route::get('/insert', [PageController::class, 'insert'])->name('insert');
+Route::get('/update', [PageController::class, 'update'])->name('update');
+Route::get('/manage', [PageController::class, 'manage'])->name('manage');
+Route::post('/manage', [PageController::class, 'deleteUser'])->name('deleteUser');
 
 // Route::get('/profile/{id}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 // Route::post('/profile/{id}', [App\Http\Controllers\HomeController::class, 'update'])->name('update');

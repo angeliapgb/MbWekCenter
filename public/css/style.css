@@ -1,10 +1,22 @@
+nav a {
+    color: #fff;
+}
+
 .navbar {
     background-color: #6cb2eb;
 }
 
-/* .nav-link a {
-    color: white;
-} */
+.manage-user table {
+    border: 1px solid #dee2e6;
+}
+
+.manage-user tbody {
+    background-color: #e6e6e6;
+}
+
+.manage-user button {
+    background-color: #3390dc;
+}
 
 footer {
     text-align: center;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User as UserModel;
 
 class PageController extends Controller
 {
@@ -39,7 +40,19 @@ class PageController extends Controller
         return view('update');
     }
 
+    // public function manage() {
+    //     return view('manage');
+    // }
+
     public function manage() {
-        return view('manage');
+        $data = UserModel::all();
+        return view('manage', compact('data'));
+    }
+
+    public function deleteUser(Request $request) {
+        // dd($request);
+        UserModel::where('id', '=', $request->id)
+                ->delete();
+        return redirect('manage');
     }
 }
