@@ -8,10 +8,10 @@
                 <div class="card-header">{{ __('Update Profile') }}</div>
 
                 <div class="card-body">
-                    {{-- @foreach ($users as $user) --}}
-                    <form method="POST" action="/profile/{id}">
+                    {{-- @foreach ($data as $data) --}}
+                    <form method="POST" action="{{ route('updateProfile') }}">
                         @csrf
-
+                        <input type="hidden" value="{{ auth()->user()->id }}" name="id">
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
 

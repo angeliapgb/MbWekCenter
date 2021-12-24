@@ -11,6 +11,16 @@ class PageController extends Controller
         return view('profile');
     }
 
+    public function updateProfile(Request $request) {
+        UserModel::where('id', '=', $request->id)
+                    ->update([
+                        'name' => $request->name,
+                        'password' => $request->password,
+                        'gender' => $request->gender,
+                    ]);
+        return redirect('profile');
+    }
+
     // public function update(Request $request, $id) {
     //     $users = User::all();
     //     $users = DB::table('users')
@@ -40,17 +50,12 @@ class PageController extends Controller
         return view('update');
     }
 
-    // public function manage() {
-    //     return view('manage');
-    // }
-
     public function manage() {
         $data = UserModel::all();
         return view('manage', compact('data'));
     }
 
     public function deleteUser(Request $request) {
-        // dd($request);
         UserModel::where('id', '=', $request->id)
                 ->delete();
         return redirect('manage');
