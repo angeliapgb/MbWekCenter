@@ -3,6 +3,23 @@
 @section('title', 'Home')
 
 @section('content')
+<div>
+    <form action="/products" class="container-fluid">
+        <div class="mb-5 d-flex justify-content-evenly">
+            <label class="form-label" style="margin:0 5%;">Search:</label>
+            <select class="form-control" name="category" style="width: 10%;">
+                @foreach($category as $c)
+                {{-- masih gabisa --}}
+                <option value="{{ $c->category_name }}">
+                    <a href="/products/category/{{ $c->id }}">{{ $c->category_name }}</a>
+                </option>
+                @endforeach
+            </select>
+            <input type="text" name="search_query" class="form-control" style="width: 50%; margin:0 2%;">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+</div>
 
 <div class="d-flex justify-content-evenly flex-wrap">
     @foreach($products as $p)

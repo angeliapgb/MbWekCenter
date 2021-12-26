@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,4 +38,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // public function validate()
+    // {
+    //     $remember = (Input::has('remember')) ? true : false;
+
+    //     if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+    //         return redirect ('home');
+    //     } else {
+    //         return Redirect::to('auth.login')
+    //         ->withInput(Input::except('password'))
+    //         ->with('flash_notice', 'Your username/password combination was incorrect.');
+    //     }
+    // }
 }

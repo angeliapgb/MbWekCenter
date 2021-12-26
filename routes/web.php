@@ -24,10 +24,16 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 Route::post('/profile', [PageController::class, 'updateProfile'])->name('updateProfile');
+
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/products', [PageController::class, 'searchProduct']);
+Route::get('/products/category/{id}', [PageController::Class, 'viewCategory']);
+
 Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
 Route::get('/cart', [PageController::class, 'cart'])->name('cart');
 Route::get('/insert', [PageController::class, 'insert'])->name('insert');
 Route::get('/update', [PageController::class, 'update'])->name('update');
+
 Route::get('/manage', [PageController::class, 'manage'])->name('manage');
 Route::post('/manage', [PageController::class, 'deleteUser'])->name('deleteUser');
 

@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Products')
 
 @section('content')
-
 <div class="d-flex justify-content-evenly flex-wrap">
     @foreach($products as $p)
     <div class="card mt-5" style="width: 20rem; margin-left: 5rem; margin-bottom: 2rem;">

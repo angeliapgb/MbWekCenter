@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'MbWekCenter') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -41,10 +41,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a href="" class="nav-link">Home</a>
+                            <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Search Product</a>
+                            <a href="{{ route('search') }}" class="nav-link">Search Product</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest
@@ -74,7 +74,7 @@
                                         <a class="dropdown-item" href="{{ route('transaction') }}">
                                             {{ __('Transaction') }}
                                         </a>
-    
+
                                         <a class="dropdown-item" href="{{ route('cart') }}">
                                             {{ __('Cart') }}
                                         </a>
@@ -96,13 +96,13 @@
                                         </a>
 
                                     @endif
-                                    
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-    
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
