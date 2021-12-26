@@ -29,12 +29,12 @@
           <h5 class="card-title">{{ $p->title }}</h5>
           <p class="card-text">{{ $p->description }}</p>
             @if ( Auth::guest() )
-                <a href="#" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
+                <a href="detailproduct/{{ $p['title'] }}" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
             @else
                 @if ( Auth::user()->name == 'Admin' )
                 <a href="#" class="btn bg-danger text-white" style="padding: 2% 28%;">Update Product</a>
                 @endif
-                <a href="#" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
+                <a href="detailproduct/{{ $p['title'] }}" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
             @endif
         </div>
     </div>
