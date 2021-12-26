@@ -56,6 +56,13 @@ class PageController extends Controller
         return view('products', ['products' => $category->products]);
     }
 
+    public function productdetail($title){
+        $detail = ProductModel::where('product.title', $title)
+                                ->get(['product.title', 'product.image', 'product.description', 'product.stock', 'product.price']);;
+
+        return view('detailproduct', ['details' => $detail]);
+    }
+
     public function transaction() {
         return view('transaction');
     }
