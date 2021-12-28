@@ -36,16 +36,13 @@ class PageController extends Controller
     //     return view('profile', compact('users'));
     // }
 
-    public function search(){
-        $query = request('search_query');
-        $products = ProductModel::where('title', 'like', '%' . request('search_query') . '%')->get();
-
-        return view('products', ['products' => $products]);
-    }
-
     public function searchProduct(){
         $query = request('search_query');
-        $products = ProductModel::where('title', 'like', '%' . request('search_query') . '%')->get();
+        $query2 = request('category');
+        $products = ProductModel::join('category', 'category.id', 'product.category_id')
+                                ->where('title', 'like', '%' . request('search_query') . '%')
+                                ->where('category_name', $query2)
+                                ->get();
 
         return view('products', ['products' => $products]);
     }

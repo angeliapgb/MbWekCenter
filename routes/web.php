@@ -28,7 +28,7 @@ Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 Route::post('/profile', [PageController::class, 'updateProfile'])->name('updateProfile');
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
-Route::get('/products', [PageController::class, 'searchProduct']);
+Route::get('/products', [PageController::class, 'searchProduct'])->name('products');
 Route::get('/products/category/{id}', [PageController::Class, 'viewCategory']);
 
 Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
