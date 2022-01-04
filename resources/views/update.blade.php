@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Update Product')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -12,29 +14,13 @@
                         <form method="POST" action="/profile/{id}">
                             @csrf
 
-                            {{-- <div class="row mb-3 form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                <label for="gender" class="col-md-4 control-label text-md-right" style="margin-top: 1%">Gender</label>
-
-                                <div class="col-md-6">
-                                <select class="form-control" name="gender">
-                                <option value="0">Male</option>
-                                <option value="1">Female</option>
-                                </select>
-
-                                @if ($errors->has('gender'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('gender') }}</strong>
-                                    </span>
-                                @endif
-                                </div>
-                            </div> --}}
-
                             <div class="row mb-3">
-                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="category" type="text" class="form-control" name="category" required autofocus>
-                                </div>
+                                @foreach($category as $c)
+                                {{-- masih gabisa --}}
+                                <option value="{{ $c->category_name }}">
+                                    <a href="/products/category/{{ $c->id }}">{{ $c->category_name }}</a>
+                                </option>
+                                @endforeach
                             </div>
 
                             <div class="row mb-3">
@@ -49,7 +35,7 @@
                                 <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="description" type="text" class="form-control" name="description" required autofocus>
+                                    <textarea class="form-control" name="description" cols="30"></textarea>
                                 </div>
                             </div>
 
@@ -73,23 +59,9 @@
                                 <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="image" type="text" class="form-control" name="image" required autofocus>
+                                    <input type="file" name="file">
                                 </div>
                             </div>
-
-                            {{-- <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Product Name') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div> --}}
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">

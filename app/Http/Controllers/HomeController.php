@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\User;
 use App\Http\Requests;
+use App\Models\Product as ProductModel;
 
 class HomeController extends Controller
 {
@@ -15,10 +16,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -27,6 +28,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home', ['products' => ProductModel::all()]);
+    }
+
+    public function search()
+    {
+        $category = ProductModel::join('category', 'product.id', 'category.id')
+                                ->get('category.category_name', 'category.id');
+
+        return view('search', ['products' => ProductModel::all(), 'category' => $category]);
     }
 }

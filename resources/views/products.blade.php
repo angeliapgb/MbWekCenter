@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Products')
 
 @section('content')
-
 <div class="d-flex justify-content-evenly flex-wrap">
     @foreach($products as $p)
     <div class="card mt-5" style="width: 20rem; margin-left: 5rem; margin-bottom: 2rem;">
@@ -15,7 +14,7 @@
                 <a href="detailproduct/{{ $p['title'] }}" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
             @else
                 @if ( Auth::user()->name == 'Admin' )
-                <a href="{{ route('update') }}" class="btn bg-danger text-white" style="padding: 2% 28%;">Update Product</a>
+                <a href="#" class="btn bg-danger text-white" style="padding: 2% 28%;">Update Product</a>
                 @endif
                 <a href="detailproduct/{{ $p['title'] }}" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
             @endif

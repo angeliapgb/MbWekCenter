@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User as UserModel;
+use App\Models\Product as ProductModel;
+use App\Models\Category as CategoryModel;
 
 class PageController extends Controller
 {
@@ -42,6 +44,30 @@ class PageController extends Controller
 
     //     return view('profile', compact('users'));
     // }
+
+    public function searchProduct(){
+        $query = request('search_query');
+        $query2 = request('category');
+        $products = ProductModel::join('category', 'category.id', 'product.category_id')
+                                ->where('title', 'like', '%' . request('search_query') . '%')
+                                ->where('category_name', $query2)
+                                ->get();
+
+        return view('products', ['products' => $products]);
+    }
+
+    public function viewCategory($id){
+        $category = CategoryModel::where('category.id', $id)->first();
+
+        return view('products', ['products' => $category->products]);
+    }
+
+    public function productdetail($title){
+        $detail = ProductModel::where('product.title', $title)
+                                ->get(['product.title', 'product.image', 'product.description', 'product.stock', 'product.price']);;
+
+        return view('detailproduct', ['details' => $detail]);
+    }
 
     public function transaction() {
         return view('transaction');
