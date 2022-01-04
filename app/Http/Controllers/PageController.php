@@ -7,12 +7,21 @@ use App\Models\User as UserModel;
 
 class PageController extends Controller
 {
+    public function search() {
+        return view('search');
+    }
+
     public function profile() {
         return view('profile');
     }
 
     public function updateProfile(Request $request) {
         UserModel::where('id', '=', $request->id)
+                    ->validate($request, [
+                        'name' => 'required|max:30',
+                        'password' => 'required|min:8',
+                        'gender' => 'required',
+                    ])
                     ->update([
                         'name' => $request->name,
                         'password' => $request->password,

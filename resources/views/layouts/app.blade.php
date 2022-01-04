@@ -25,9 +25,16 @@
     <div id="app">
         <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'MbWekCenter') }}
-                </a>
+                @if (Route::has('login'))
+                    <a class="navbar-brand" href="{{ url('/home') }}">
+                        {{ config('app.name', 'MbWekCenter') }}
+                    </a>
+                @else
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'MbWekCenter') }}
+                    </a>
+                @endif
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -41,10 +48,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a href="" class="nav-link">Home</a>
+                            <a href="{{ route('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Search Product</a>
+                            <a href="{{ route('search') }}" class="nav-link">Search Product</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest
