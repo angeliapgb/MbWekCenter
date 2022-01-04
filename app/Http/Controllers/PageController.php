@@ -78,7 +78,24 @@ class PageController extends Controller
     }
 
     public function insert() {
-        return view('insert');
+        $categories = CategoryModel::all();
+        return view('insert', compact('categories'));
+    }
+
+    public function insertProduct(Request $request) {
+        // $products = ProductModel::join('category', 'category.id', 'product.category_id')
+        //     ->where(['product.category_id' => 'category.id'])
+        //     ->get();
+        $products = ProductModel::create([
+            'category_id' => $request->category,
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'image' => $request->image,
+            // 'id' => 1,
+        ]);
+        return redirect('insert');
     }
 
     public function update() {

@@ -22,12 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-<<<<<<< HEAD
-Route::get('/search', [PageController::class, 'search'])->name('search');
-=======
 Route::get('/detailproduct/{title}', [PageController::class, 'productdetail'])->name('detailproduct');
 
->>>>>>> 55061d346159f2df3fd370961adf21aaa98be820
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 Route::post('/profile', [PageController::class, 'updateProfile'])->name('updateProfile');
 
@@ -38,6 +34,7 @@ Route::get('/products/category/{id}', [PageController::Class, 'viewCategory']);
 Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
 Route::get('/cart', [PageController::class, 'cart'])->name('cart');
 Route::get('/insert', [PageController::class, 'insert'])->name('insert');
+Route::post('/insert', [PageController::class, 'insertProduct'])->name('insertProduct');
 Route::get('/update', [PageController::class, 'update'])->name('update');
 
 Route::get('/manage', [PageController::class, 'manage'])->name('manage');

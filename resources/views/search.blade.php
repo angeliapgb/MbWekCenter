@@ -1,10 +1,5 @@
 @extends('layouts.app')
 
-<<<<<<< HEAD
-@section('content')
-
-@endsection
-=======
 @section('title', 'Home')
 
 @section('content')
@@ -47,4 +42,3 @@
 </div>
 
 @endsection
->>>>>>> 55061d346159f2df3fd370961adf21aaa98be820

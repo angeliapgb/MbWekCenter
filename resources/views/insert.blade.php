@@ -9,7 +9,7 @@
 
                     <div class="card-body">
                         {{-- @foreach ($users as $user) --}}
-                        <form method="POST" action="/profile/{id}">
+                        <form method="POST" action="{{ route('insertProduct') }}">
                             @csrf
 
                             {{-- <div class="row mb-3 form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
@@ -30,10 +30,17 @@
                             </div> --}}
 
                             <div class="row mb-3">
-                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+                                <label for="category" class="col-md-4 col-form-label text-md-right">
+                                    {{ __('Category') }}
+                                </label>
 
                                 <div class="col-md-6">
-                                    <input id="category" type="text" class="form-control" name="category" required autofocus>
+                                    {{-- <input id="category" type="text" class="form-control" name="category" required autofocus> --}}
+                                    <select class="form-control" name="category">
+                                        @foreach ($categories as $category)
+                                            <option id="category" value='{{ $category->id}}'>{{ $category->category_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -49,7 +56,7 @@
                                 <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="description" type="text" class="form-control" name="description" required autofocus>
+                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control" required autofocus></textarea>
                                 </div>
                             </div>
 
@@ -73,7 +80,7 @@
                                 <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="image" type="text" class="form-control" name="image" required autofocus>
+                                    <input id="image" type="file" name="image" required autofocus>
                                 </div>
                             </div>
 
