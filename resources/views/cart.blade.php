@@ -24,21 +24,15 @@
                 <?php $sum = 0; ?>
                 @forelse ($cart as $cart) 
                     <tr>
-                        {{-- @if ($cart->name != 'Admin') --}}
-                            <td>{{ $loop->iteration}}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $cart->title }}</td>
                             <td>{{ $cart->price }}</td>
                             <td>{{ $cart->quantity }}</td>
                             <td>{{ $cart->price*$cart->quantity }}</td>
                             <input type="hidden" value="{{ $sum+=$cart->price*$cart->quantity }}">
                             <td>
-                                {{-- belum dibenerin --}}
                                 <form action="{{ route('cartDelete', $cart->id) }}" method="POST">
                                     @csrf
-                                    {{-- <input type="hidden" value="{{$cart->id}}" name="transaction_id">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Delete') }}
-                                    </button> --}}
                                     <a href="cart/{{ $cart->id }}">
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Delete') }}
@@ -46,23 +40,23 @@
                                     </a>
                                 </form>
                             </td>
-                        {{-- @endif --}}
                     </tr>
                     @empty
                         <td id="datanotfound" colspan="6">Your cart is empty ...</td>
                 @endforelse
             </tbody>
         </table>
-        {{-- belum itung grand total --}}
         <p>Grand Total {{ $sum }},-</p>
-        {{-- belum routing checkout --}}
         @if($cart != null)
-            <form action="" method="POST">
+            <form action="{{ route('checkout') }}" method="POST">
                 @csrf
+                    <input name="id" type="hidden" value="{{ $cart->id }}">
+
                     <button type="submit" class="btn btn-primary">
                         {{ __('Checkout') }}
                     </button>
             </form>
+        @else
         @endif
         
     </div>

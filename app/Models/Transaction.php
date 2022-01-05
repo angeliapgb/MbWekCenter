@@ -12,12 +12,7 @@ class Transaction extends Model
     protected $table = "transaction";
     protected $guarded = [];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function detail_transaction(){
+        return $this->hasMany(Transaction::class);
     }
-
-    public function product(){
-        return $this->belongsTo(Product::class);
-    }
-
 }
