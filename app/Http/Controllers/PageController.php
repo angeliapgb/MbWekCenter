@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User as UserModel;
 use App\Models\Product as ProductModel;
 use App\Models\Category as CategoryModel;
+use App\Models\DetailTransaction as DetailTransactionModel;
 use App\Models\Transaction as TransactionModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -75,7 +76,7 @@ class PageController extends Controller
     }
 
     public function cartInput(Request $request) {
-        TransactionModel::create([
+        DetailTransactionModel::create([
             'product_id' => $request->product_id,
             'user_id' => $request->user_id,
             'quantity' => $request->quantity,
@@ -84,19 +85,35 @@ class PageController extends Controller
     }
 
     public function transaction() {
-        return view('transaction');
+        $data = TransactionModel::all();
+        return view('transaction', compact('data'));
+    }
+
+    public function checkout(Request $request) {
+        TransactionModel::create([
+            'detail_transaction_id' => $request->id
+        ]);
+        return redirect('transaction');
+    }
+
+    public function detail($id) {
+        $data = TransactionModel::join('detail_transaction', 'detail_transaction.id', 'transaction.detail_transaction_id')
+                                ->join('product', 'product.id', 'detail_transaction.product_id')
+                                ->where('transaction.id', $id)
+                                ->get(['product.title', 'product.description', 'product.price', 'detail_transaction.quantity', 'detail_transaction.id']);
+        return view('detailtransaction', compact('data'));
     }
 
     public function cart() {
-        $cart = TransactionModel::join('users', 'users.id', 'transaction.user_id')
-                                ->join('product', 'product.id', 'transaction.product_id')
+        $cart = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
+                                ->join('product', 'product.id', 'detail_transaction.product_id')
                                 ->where('user_id', auth()->user()->id)
-                                ->get(['product.title', 'product.price', 'transaction.quantity', 'transaction.id']);
+                                ->get(['product.title', 'product.price', 'detail_transaction.quantity', 'detail_transaction.id']);
         return view('cart', compact('cart'));
     }
 
     public function cartDelete($id) {
-        TransactionModel::where('id', $id)
+        DetailTransactionModel::where('id', $id)
                             ->delete();
         return redirect('cart');
     }

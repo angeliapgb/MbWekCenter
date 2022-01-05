@@ -30,7 +30,7 @@
                         @endif
                     </tr>
                     @empty
-                        <td id="datanotfound" colspan="2">No user found ...</td>
+                        <td id="datanotfound" colspan="6">No user found ...</td>
                 @endforelse
             </tbody>
         </table>

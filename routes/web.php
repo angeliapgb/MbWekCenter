@@ -33,10 +33,15 @@ Route::get('/products', [PageController::class, 'searchProduct'])->name('product
 Route::get('/products/category/{id}', [PageController::Class, 'viewCategory']);
 
 Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
+Route::post('/transaction', [PageController::class, 'transaction'])->name('transaction');
+Route::post('/transaction/{id}', [PageController::class, 'detail'])->name('detail');
+
+Route::get('/detailtransaction/{id}', [PageController::class, 'detail'])->name('detail');
 
 Route::get('/cart', [PageController::class, 'cart'])->name('cart');
 Route::post('/cart', [PageController::class, 'cartInput'])->name('cartInput');
 Route::post('/cart/{id}', [PageController::class, 'cartDelete'])->name('cartDelete');
+Route::post('/cart', [PageController::class, 'checkout'])->name('checkout');
 
 Route::get('/insert', [PageController::class, 'insert'])->name('insert');
 Route::post('/insert', [PageController::class, 'insertProduct'])->name('insertProduct');

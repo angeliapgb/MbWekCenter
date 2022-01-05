@@ -32,7 +32,7 @@
                 <a href="detailproduct/{{ $p['title'] }}" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
             @else
                 @if ( Auth::user()->name == 'Admin' )
-                <a href="{{ route('update') }}" class="btn bg-danger text-white" style="padding: 2% 28%;">Update Product</a>
+                    <a href="{{ route('update', $p->title) }}" class="btn bg-danger text-white" style="padding: 2% 28%;">Update Product</a>
                 @endif
                 <a href="detailproduct/{{ $p['title'] }}" class="btn btn-primary" style="margin-top: 2%; padding: 2% 30%;">Product Detail</a>
             @endif
