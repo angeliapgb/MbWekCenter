@@ -34,6 +34,9 @@ Route::get('/products/category/{id}', [PageController::Class, 'viewCategory']);
 
 Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
 Route::post('/transaction', [PageController::class, 'transaction'])->name('transaction');
+Route::post('/transaction/{id}', [PageController::class, 'detail'])->name('detail');
+
+Route::get('/detailtransaction/{id}', [PageController::class, 'detail'])->name('detail');
 
 Route::get('/cart', [PageController::class, 'cart'])->name('cart');
 Route::post('/cart', [PageController::class, 'cartInput'])->name('cartInput');

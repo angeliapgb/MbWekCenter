@@ -15,9 +15,6 @@ class CreateTransactionTable extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('detail_transaction_id');
-
-            $table->foreign('detail_transaction_id')->references('id')->on('detail_transaction')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

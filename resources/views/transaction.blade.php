@@ -13,24 +13,20 @@
                     <td>Detail Transaction</td>
                 </tr>
             </thead>
-            <form method="POST"  action="{{ route('cart') }}" class="container-fluid">
-                @csrf
-                <input id="user_id" type="hidden" value="{{ auth()->user()->id }}" name="user_id">
-            </form>
             <tbody>
                 @forelse ($data as $data) 
                     <tr>
                             <td>{{ $loop->iteration}}</td>
                             <td>{{ $data->created_at }}</td>
                             <td>
-                                <form action="{{ route('transaction') }}" method="POST">
-                                    @csrf
-                                    {{-- <a href="cart/{{ $cart->id }}"> --}}
+                                {{-- <form action="{{ route('transaction') }}" method="POST">
+                                    @csrf --}}
+                                    <a href="detailtransaction/{{ $data->id }}">
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Check Detail') }}
                                         </button>
-                                    {{-- </a> --}}
-                                </form>
+                                    </a>
+                                {{-- </form> --}}
                             </td>
                     </tr>
                     @empty

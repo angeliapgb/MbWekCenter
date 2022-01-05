@@ -92,6 +92,14 @@ class PageController extends Controller
         return redirect('transaction');
     }
 
+    public function detail($id) {
+        $data = TransactionModel::join('detail_transaction', 'detail_transaction.id', 'transaction.detail_transaction_id')
+                                ->join('product', 'product.id', 'detail_transaction.product_id')
+                                ->where('transaction.id', $id)
+                                ->get(['product.title', 'product.description', 'product.price', 'detail_transaction.quantity', 'detail_transaction.id']);
+        return view('detailtransaction', compact('data'));
+    }
+
     public function cart() {
         $cart = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
                                 ->join('product', 'product.id', 'detail_transaction.product_id')
