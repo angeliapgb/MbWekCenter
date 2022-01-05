@@ -35,7 +35,6 @@
                                 </label>
 
                                 <div class="col-md-6">
-                                    {{-- <input id="category" type="text" class="form-control" name="category" required autofocus> --}}
                                     <select class="form-control" name="category">
                                         @foreach ($categories as $category)
                                             <option id="category" value='{{ $category->id}}'>{{ $category->category_name}}</option>

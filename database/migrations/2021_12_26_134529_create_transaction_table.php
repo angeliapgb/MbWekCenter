@@ -18,8 +18,6 @@ class CreateTransactionTable extends Migration
             $table->foreignId('product_id');
             $table->foreignId('user_id');
             $table->integer('quantity');
-            $table->integer('sub_total');
-            $table->integer('grand_total');
 
             $table->foreign('product_id')->references('id')->on('product')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

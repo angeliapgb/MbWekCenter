@@ -28,7 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['products' => ProductModel::all()]);
+        $products = ProductModel::all();
+        return view('home', ['products' => $products]);
     }
 
     public function search()

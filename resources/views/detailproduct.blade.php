@@ -15,11 +15,14 @@
 @if ( Auth::guest() )
 @else
     @if ( Auth::user()->name != 'Admin' )
-        <form action="/cart" class="container-fluid">
+        <form method="POST"  action="{{ route('cartInput') }}" class="container-fluid">
+            @csrf
             <h3>Add To Cart</h3>
+            <input id="product_id" type="hidden" value="{{ $det->id }}" name="product_id">
+            <input id="user_id" type="hidden" value="{{ auth()->user()->id }}" name="user_id">
             <div class="addcart d-flex justify-content-evenly">
                 <label class="form-label" style="margin:0 5%;">Quantity: </label>
-                <input type="text" name="quantity" class="form-control" style="width: 50%; margin:0 2%;">
+                <input id="quantity" type="text" name="quantity" class="form-control" style="width: 50%; margin:0 2%;">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

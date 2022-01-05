@@ -6,7 +6,7 @@ nav a {
     background-color: #6cb2eb;
 }
 
-.manage-user table {
+.manage-user, .cart table {
     border: 1px solid #dee2e6;
 }
 
@@ -16,6 +16,21 @@ nav a {
 
 .manage-user button {
     background-color: #3390dc;
+}
+
+.cart table {
+    background-color: #343a40;
+    color: #fbfbfb;
+}
+
+.cart tbody {
+    background-color: #f8fafc;
+    color: #343a40;
+}
+
+.cart button {
+    background-color: #e3342f;
+    border: none;
 }
 
 footer {

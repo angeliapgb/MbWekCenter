@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/detailproduct/{title}', [PageController::class, 'productdetail'])->name('detailproduct');
+// Route::post('/detailproduct/{title}', [PageController::class, 'cartInput'])->name('cartInput');
 
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 Route::post('/profile', [PageController::class, 'updateProfile'])->name('updateProfile');
@@ -32,10 +33,15 @@ Route::get('/products', [PageController::class, 'searchProduct'])->name('product
 Route::get('/products/category/{id}', [PageController::Class, 'viewCategory']);
 
 Route::get('/transaction', [PageController::class, 'transaction'])->name('transaction');
+
 Route::get('/cart', [PageController::class, 'cart'])->name('cart');
+Route::post('/cart', [PageController::class, 'cartInput'])->name('cartInput');
+
 Route::get('/insert', [PageController::class, 'insert'])->name('insert');
 Route::post('/insert', [PageController::class, 'insertProduct'])->name('insertProduct');
-Route::get('/update', [PageController::class, 'update'])->name('update');
+
+Route::get('/update/{title}', [PageController::class, 'update'])->name('update');
+Route::post('/update/{title}', [PageController::class, 'updateProduct'])->name('updateProduct');
 
 Route::get('/manage', [PageController::class, 'manage'])->name('manage');
 Route::post('/manage', [PageController::class, 'deleteUser'])->name('deleteUser');

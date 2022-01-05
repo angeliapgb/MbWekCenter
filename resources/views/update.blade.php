@@ -11,16 +11,23 @@
 
                     <div class="card-body">
                         {{-- @foreach ($users as $user) --}}
-                        <form method="POST" action="/profile/{id}">
+                        <form method="POST" action="{{ route('updateProduct', $detail->title) }}">
                             @csrf
 
+                            <input id="product_id" type="hidden" class="form-control" value="{{ $detail->id }}" name="product_id" required autofocus>
+
                             <div class="row mb-3">
-                                @foreach($category as $c)
-                                {{-- masih gabisa --}}
-                                <option value="{{ $c->category_name }}">
-                                    <a href="/products/category/{{ $c->id }}">{{ $c->category_name }}</a>
-                                </option>
-                                @endforeach
+                                <label for="category" class="col-md-4 col-form-label text-md-right">
+                                    {{ __('Category') }}
+                                </label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" name="category">
+                                        @foreach ($categories as $category)
+                                            <option id="category" value='{{ $category->id}}'>{{ $category->category_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row mb-3">
@@ -35,7 +42,7 @@
                                 <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">
-                                    <textarea class="form-control" name="description" cols="30"></textarea>
+                                    <textarea id="description" class="form-control" name="description" cols="30"></textarea>
                                 </div>
                             </div>
 
@@ -59,7 +66,7 @@
                                 <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
                                 <div class="col-md-6">
-                                    <input type="file" name="file">
+                                    <input id="image" type="file" name="image">
                                 </div>
                             </div>
 

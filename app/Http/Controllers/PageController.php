@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User as UserModel;
 use App\Models\Product as ProductModel;
 use App\Models\Category as CategoryModel;
+use App\Models\Transaction as TransactionModel;
 
 class PageController extends Controller
 {
@@ -64,17 +65,30 @@ class PageController extends Controller
 
     public function productdetail($title){
         $detail = ProductModel::where('product.title', $title)
-                                ->get(['product.title', 'product.image', 'product.description', 'product.stock', 'product.price']);;
+                                ->get(['product.id', 'product.title', 'product.image', 'product.description', 'product.stock', 'product.price']);;
 
         return view('detailproduct', ['details' => $detail]);
+    }
+
+    public function cartInput(Request $request) {
+        TransactionModel::create([
+            'product_id' => $request->product_id,
+            'user_id' => $request->user_id,
+            'quantity' => $request->quantity,
+        ]);
+        return redirect('cart');
     }
 
     public function transaction() {
         return view('transaction');
     }
 
-    public function cart() {
-        return view('cart');
+    public function cart(Request $request) {
+        $cart = TransactionModel::join('users', 'users.id', 'transaction.user_id')
+                                // ->where('user_id', '=', auth()->user()->user_id)
+                                ->get();
+
+        return view('cart', compact('cart'));
     }
 
     public function insert() {
@@ -83,9 +97,6 @@ class PageController extends Controller
     }
 
     public function insertProduct(Request $request) {
-        // $products = ProductModel::join('category', 'category.id', 'product.category_id')
-        //     ->where(['product.category_id' => 'category.id'])
-        //     ->get();
         $products = ProductModel::create([
             'category_id' => $request->category,
             'title' => $request->title,
@@ -93,13 +104,28 @@ class PageController extends Controller
             'price' => $request->price,
             'stock' => $request->stock,
             'image' => $request->image,
-            // 'id' => 1,
         ]);
         return redirect('insert');
     }
 
-    public function update() {
-        return view('update');
+    public function update($title) {
+        $detail = ProductModel::where('product.title', $title)
+                                ->first();
+        $categories = CategoryModel::all();
+        return view('update', compact(['detail', 'categories']));
+    }
+
+    public function updateProduct(Request $request) {
+        $products = ProductModel::where('id', $request->product_id)
+                        ->update([
+                            'category_id' => $request->category,
+                            'title' => $request->title,
+                            'description' => $request->description,
+                            'price' => $request->price,
+                            'stock' => $request->stock,
+                            'image' => $request->image,
+                        ]);
+        return redirect('update', compact(['products']));
     }
 
     public function manage() {
