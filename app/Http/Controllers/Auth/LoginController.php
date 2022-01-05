@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Services\Login\RememberMeExpiration;
 
 class LoginController extends Controller
 {
@@ -39,16 +41,46 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // public function validate()
+    use RememberMeExpiration;
+
+    public function rememberToken(Request $request)
+    {
+        $remember = (Input::has('remember')) ? true : false;
+
+        if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+            return redirect ('home');
+        } else {
+            return Redirect::to('auth.login')
+            ->withInput(Input::except('password'))
+            ->with('flash_notice', 'Your username/password combination was incorrect.');
+        }
+    }
+
+    // public function rememberToken(Request $request)
     // {
-    //     $remember = (Input::has('remember')) ? true : false;
+    //     $remember = $request->remember ? true : false;
 
     //     if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
     //         return redirect ('home');
-    //     } else {
+    //     }
+
+    //     return redirect('auth.login');
+    // }
+
+    // public function login(Request $request)
+    // {
+    //     $remember = $request->remember ? true : false;
+
+    //     if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+    //         $this->setRememberMeExpiration($user);
+    //         return redirect ('home');
+    //     }
+    //     else {
     //         return Redirect::to('auth.login')
     //         ->withInput(Input::except('password'))
     //         ->with('flash_notice', 'Your username/password combination was incorrect.');
     //     }
+    //     return redirect('home');
     // }
+
 }

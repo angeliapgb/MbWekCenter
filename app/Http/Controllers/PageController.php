@@ -7,6 +7,8 @@ use App\Models\User as UserModel;
 use App\Models\Product as ProductModel;
 use App\Models\Category as CategoryModel;
 use App\Models\Transaction as TransactionModel;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -19,17 +21,19 @@ class PageController extends Controller
     }
 
     public function updateProfile(Request $request) {
-        UserModel::where('id', '=', $request->id)
-                    ->validate($request, [
-                        'name' => 'required|max:30',
-                        'password' => 'required|min:8',
-                        'gender' => 'required',
-                    ])
-                    ->update([
-                        'name' => $request->name,
-                        'password' => $request->password,
-                        'gender' => $request->gender,
-                    ]);
+
+        $this->validate($request, [
+            'name' => 'required|max:30',
+            'password' => 'required|min:8',
+            'gender' => 'required',
+        ]);
+
+        UserModel::where('id', '=', Auth::user()->id)
+        ->update([
+            'name' => $request->name,
+            'password' => Hash::make($request->password),
+            'gender' => $request->gender,
+        ]);
         return redirect('profile');
     }
 
@@ -111,6 +115,11 @@ class PageController extends Controller
             'stock' => $request->stock,
             'image' => $request->image,
         ]);
+
+        if($request->hasFile('image')){
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('images',$filename,);
+        }
         return redirect('insert');
     }
 
@@ -131,7 +140,8 @@ class PageController extends Controller
                             'stock' => $request->stock,
                             'image' => $request->image,
                         ]);
-        return redirect('home');
+
+        return redirect('home', compact(['products']));
     }
 
     public function manage() {

@@ -22,7 +22,7 @@
             </form>
             <tbody>
                 <?php $sum = 0; ?>
-                @forelse ($cart as $cart) 
+                @forelse ($cart as $cart)
                     <tr>
                         {{-- @if ($cart->name != 'Admin') --}}
                             <td>{{ $loop->iteration}}</td>
@@ -53,9 +53,7 @@
                 @endforelse
             </tbody>
         </table>
-        {{-- belum itung grand total --}}
         <p>Grand Total {{ $sum }},-</p>
-        {{-- belum routing checkout --}}
         @if($cart != null)
             <form action="" method="POST">
                 @csrf
@@ -64,7 +62,7 @@
                     </button>
             </form>
         @endif
-        
+
     </div>
 </div>
 
