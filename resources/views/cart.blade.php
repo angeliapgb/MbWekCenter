@@ -16,46 +16,55 @@
                     <td>Delete</td>
                 </tr>
             </thead>
+            <form method="POST"  action="{{ route('cart') }}" class="container-fluid">
+                @csrf
+                <input id="user_id" type="hidden" value="{{ auth()->user()->id }}" name="user_id">
+            </form>
             <tbody>
+                <?php $sum = 0; ?>
                 @forelse ($cart as $cart) 
-                    <form method="POST"  action="{{ route('cart') }}" class="container-fluid">
-                        @csrf
-                        <input id="user_id" type="hidden" value="{{ auth()->user()->id }}" name="user_id">
-                    </form>
                     <tr>
                         {{-- @if ($cart->name != 'Admin') --}}
-
                             <td>{{ $loop->iteration}}</td>
-                            <td>{{ $cart->product->title }}</td>
-                            <td>{{ $cart->product->price }}</td>
+                            <td>{{ $cart->title }}</td>
+                            <td>{{ $cart->price }}</td>
                             <td>{{ $cart->quantity }}</td>
-                            <td>{{ $cart->product->price*$cart->quantity }}</td>
+                            <td>{{ $cart->price*$cart->quantity }}</td>
+                            <input type="hidden" value="{{ $sum+=$cart->price*$cart->quantity }}">
                             <td>
                                 {{-- belum dibenerin --}}
-                                <form action="{{ route('deleteUser') }}" method="POST">
+                                <form action="{{ route('cartDelete', $cart->id) }}" method="POST">
                                     @csrf
-                                    <input type="hidden" value="{{$cart->id}}" name="id">
+                                    {{-- <input type="hidden" value="{{$cart->id}}" name="transaction_id">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Delete') }}
-                                    </button>
+                                    </button> --}}
+                                    <a href="cart/{{ $cart->id }}">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Delete') }}
+                                        </button>
+                                    </a>
                                 </form>
                             </td>
                         {{-- @endif --}}
                     </tr>
                     @empty
-                        {{-- <td id="datanotfound" colspan="2">No user found ...</td> --}}
+                        <td id="datanotfound" colspan="6">Your cart is empty ...</td>
                 @endforelse
             </tbody>
         </table>
         {{-- belum itung grand total --}}
-        {{-- <p>Grand Total {{ $cart->sum($cart->product->price*$cart->quantity) }},-</p> --}}
+        <p>Grand Total {{ $sum }},-</p>
         {{-- belum routing checkout --}}
-        <form action="" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-primary">
-                {{ __('Checkout') }}
-            </button>
-        </form>
+        @if($cart != null)
+            <form action="" method="POST">
+                @csrf
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('Checkout') }}
+                    </button>
+            </form>
+        @endif
+        
     </div>
 </div>
 

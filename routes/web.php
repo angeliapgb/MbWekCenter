@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/detailproduct/{title}', [PageController::class, 'productdetail'])->name('detailproduct');
-// Route::post('/detailproduct/{title}', [PageController::class, 'cartInput'])->name('cartInput');
+Route::post('/detailproduct/{title}', [PageController::class, 'cartInput'])->name('cartInput');
 
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 Route::post('/profile', [PageController::class, 'updateProfile'])->name('updateProfile');
@@ -36,6 +36,7 @@ Route::get('/transaction', [PageController::class, 'transaction'])->name('transa
 
 Route::get('/cart', [PageController::class, 'cart'])->name('cart');
 Route::post('/cart', [PageController::class, 'cartInput'])->name('cartInput');
+Route::post('/cart/{id}', [PageController::class, 'cartDelete'])->name('cartDelete');
 
 Route::get('/insert', [PageController::class, 'insert'])->name('insert');
 Route::post('/insert', [PageController::class, 'insertProduct'])->name('insertProduct');

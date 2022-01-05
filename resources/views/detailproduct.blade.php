@@ -15,7 +15,7 @@
 @if ( Auth::guest() )
 @else
     @if ( Auth::user()->name != 'Admin' )
-        <form method="POST"  action="{{ route('cartInput') }}" class="container-fluid">
+        <form method="POST"  action="{{ route('detailproduct', $det->title) }}" class="container-fluid">
             @csrf
             <h3>Add To Cart</h3>
             <input id="product_id" type="hidden" value="{{ $det->id }}" name="product_id">

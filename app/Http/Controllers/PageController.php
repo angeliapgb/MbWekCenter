@@ -83,12 +83,18 @@ class PageController extends Controller
         return view('transaction');
     }
 
-    public function cart(Request $request) {
+    public function cart() {
         $cart = TransactionModel::join('users', 'users.id', 'transaction.user_id')
-                                // ->where('user_id', '=', auth()->user()->user_id)
-                                ->get();
-
+                                ->join('product', 'product.id', 'transaction.product_id')
+                                ->where('user_id', auth()->user()->id)
+                                ->get(['product.title', 'product.price', 'transaction.quantity', 'transaction.id']);
         return view('cart', compact('cart'));
+    }
+
+    public function cartDelete($id) {
+        TransactionModel::where('id', $id)
+                            ->delete();
+        return redirect('cart');
     }
 
     public function insert() {
@@ -125,7 +131,7 @@ class PageController extends Controller
                             'stock' => $request->stock,
                             'image' => $request->image,
                         ]);
-        return redirect('update', compact(['products']));
+        return redirect('home');
     }
 
     public function manage() {
