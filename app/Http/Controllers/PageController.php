@@ -38,12 +38,15 @@ class PageController extends Controller
     public function searchProduct(){
         $query = request('search_query');
         $query2 = request('category');
+        $category = ProductModel::join('category', 'product.id', 'category.id')
+        ->get('category.category_name', 'category.id');
+
         $products = ProductModel::join('category', 'category.id', 'product.category_id')
                                 ->where('title', 'like', '%' . request('search_query') . '%')
                                 ->where('category_name', $query2)
                                 ->paginate(6);
 
-        return view('products', ['products' => $products]);
+        return view('products', ['products' => $products, 'category' => $category]);
     }
 
     public function viewCategory($id){
