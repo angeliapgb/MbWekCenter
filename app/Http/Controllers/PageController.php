@@ -60,7 +60,6 @@ class PageController extends Controller
     }
 
     public function cartInput(Request $request) {
-
         $stock = ProductModel::where('id', $request->product_id)
                             ->get('product.stock');
         foreach($stock as $stock) {
@@ -78,7 +77,7 @@ class PageController extends Controller
         // $transaction += 1;
 
         DetailTransactionModel::create([
-            'transaction_id' => 1,
+            'transaction_id' => $transaction->id,
             'product_id' => $request->product_id,
             'user_id' => $request->user_id,
             'quantity' => $request->quantity,
@@ -88,7 +87,9 @@ class PageController extends Controller
     }
 
     public function transaction() {
-        $data = TransactionModel::all();
+        $transaction = TransactionModel::latest('created_at')->first();
+        $data = TransactionModel::where('id', '!=', $transaction->id)
+                                ->get();
         return view('transaction', compact('data'));
     }
 
@@ -96,16 +97,17 @@ class PageController extends Controller
         $products = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
                                         ->where('user_id', '=', auth()->user()->id)
                                         ->get('detail_transaction.id');
-        $checkout = array();
-        foreach($products as $p) {
-            if(!empty($p)) {
-                $checkout[] = [
-                    $products,
-                ];
-            }
-        }
-        TransactionModel::create(array(
-        ));
+        // $checkout = array();
+        // foreach($products as $p) {
+        //     if(!empty($p)) {
+        //         $checkout[] = [
+        //             $products,
+        //         ];
+        //     }
+        // }
+        // TransactionModel::create(array(
+        // ));
+        TransactionModel::create();
         return redirect('transaction');
     }
 
@@ -118,15 +120,19 @@ class PageController extends Controller
     }
 
     public function cart() {
+        $transaction = TransactionModel::latest('created_at')->first();
+
         $cart = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
                                 ->join('product', 'product.id', 'detail_transaction.product_id')
+                                ->join('transaction', 'transaction.id', 'detail_transaction.transaction_id')
                                 ->where('user_id', '=', auth()->user()->id)
+                                ->where('transaction_id', $transaction->id)
                                 ->get(['product.title', 'product.price', 'detail_transaction.quantity', 'detail_transaction.id']);
 
         $products = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
                                 ->where('user_id', '=', auth()->user()->id)
                                 ->get('detail_transaction.id');
-        return view('cart', compact('cart', 'products'));
+        return view('cart', compact('cart', 'products', 'transaction'));
     }
 
     public function cartDelete($id) {
