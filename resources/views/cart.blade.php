@@ -22,7 +22,7 @@
             </form>
             <tbody>
                 <?php $sum = 0; ?>
-                @forelse ($cart as $cart) 
+                @forelse ($cart as $cart)
                     <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $cart->title }}</td>
@@ -58,10 +58,10 @@
                         {{ __('Checkout') }}
                         <?php Session::forget('cart'); ?>
                     </button>
-                </form>
-        {{-- @else
-        @endif --}}
-        
+            </form>
+        @else
+        @endif
+
     </div>
 </div>
 

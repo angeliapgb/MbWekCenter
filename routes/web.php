@@ -26,7 +26,7 @@ Route::get('/detailproduct/{title}', [PageController::class, 'productdetail'])->
 Route::post('/detailproduct/{title}', [PageController::class, 'cartInput'])->name('cartInput');
 
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');
-Route::post('/profile', [PageController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/profile/updateProfile', [PageController::class, 'updateProfile'])->name('updateProfile');
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/products', [PageController::class, 'searchProduct'])->name('products');
