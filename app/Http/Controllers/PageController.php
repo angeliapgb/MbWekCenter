@@ -96,6 +96,10 @@ class PageController extends Controller
                                         ->where('user_id', '=', auth()->user()->id)
                                         ->get('detail_transaction.id');
         TransactionModel::create();
+        // DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
+        //                     ->where('user_id', '=', auth()->user()->id)
+        //                     ->update('stock');
+        
         return redirect('transaction');
     }
 

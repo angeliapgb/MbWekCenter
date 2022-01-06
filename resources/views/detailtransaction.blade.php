@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Detail Transaction')
+
 @section('content')
 
 <div class="container">
@@ -18,7 +20,7 @@
             </thead>
             <tbody>
                 <?php $sum = 0; ?>
-                @forelse ($data as $data) 
+                @forelse ($data as $data)
                     <tr>
                             <td>{{ $loop->iteration}}</td>
                             <td>{{ $data->title }}</td>
@@ -32,8 +34,8 @@
                 @endforelse
             </tbody>
         </table>
-        <p>Grand Total {{ $sum }},-</p>
-        
+        <p style="margin-left: 85%;">Grand Total {{ $sum }},-</p>
+
     </div>
 </div>
 

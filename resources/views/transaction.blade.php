@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Transaction')
+
 @section('content')
 
 <div class="container">
@@ -14,13 +16,14 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($data as $data) 
+                @forelse ($data as $data)
                     <tr>
                             <td>{{ $loop->iteration}}</td>
                             <td>{{ $data->created_at }}</td>
+                            {{-- <input type="hidden" value="{{ $data->product_id }}" name="product_id"> --}}
                             <td>
                                     <a href="detailtransaction/{{ $data->id }}">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-danger">
                                             {{ __('Check Detail') }}
                                         </button>
                                     </a>
@@ -31,7 +34,7 @@
                 @endforelse
             </tbody>
         </table>
-        
+
     </div>
 </div>
 

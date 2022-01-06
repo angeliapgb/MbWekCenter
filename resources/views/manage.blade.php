@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Manage Users')
+
 @section('content')
 
 <div class="container">
@@ -13,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($data as $data) 
+                @forelse ($data as $data)
                     <tr>
                         @if ($data->name != 'Admin')
                             <td>{{ $data->id }}</td>

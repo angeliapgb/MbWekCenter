@@ -51,6 +51,3 @@ Route::post('/update/{title}', [PageController::class, 'updateProduct'])->name('
 
 Route::get('/manage', [PageController::class, 'manage'])->name('manage');
 Route::post('/manage', [PageController::class, 'deleteUser'])->name('deleteUser');
-
-// Route::get('/profile/{id}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
-// Route::post('/profile/{id}', [App\Http\Controllers\HomeController::class, 'update'])->name('update');

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Cart')
+
 @section('content')
 
 <div class="container">
@@ -35,7 +37,7 @@
                                 <form action="{{ route('cartDelete', $cart->id) }}" method="POST">
                                     @csrf
                                     <a href="cart/{{ $cart->id }}">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-danger">
                                             {{ __('Delete') }}
                                         </button>
                                     </a>
@@ -47,13 +49,13 @@
                 @endforelse
             </tbody>
         </table>
-        <p>Grand Total {{ $sum }},-</p>
+        <p style="margin-left: 85%;">Grand Total {{ $sum }},-</p>
             <form action="{{ route('checkout') }}" method="POST">
                 @csrf
                     @foreach ($products as $product)
                         <input type="hidden" value="{{ $product->id }}" name="id">
                     @endforeach
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" style="margin-left: 90%;">
                         {{ __('Checkout') }}
                         <?php Session::forget('cart'); ?>
                     </button>
