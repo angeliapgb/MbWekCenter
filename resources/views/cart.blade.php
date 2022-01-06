@@ -59,8 +59,8 @@
                         <?php Session::forget('cart'); ?>
                     </button>
             </form>
-        @else
-        @endif
+        {{-- @else
+        @endif --}}
 
     </div>
 </div>

@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Insert Product') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('insertProduct') }}">
+                        <form method="POST" action="{{ route('insertProduct') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="category" class="col-md-4 col-form-label text-md-right">

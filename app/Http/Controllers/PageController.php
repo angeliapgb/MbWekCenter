@@ -9,11 +9,11 @@ use App\Models\Category as CategoryModel;
 use App\Models\DetailTransaction as DetailTransactionModel;
 use App\Models\Transaction as TransactionModel;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
     public function search() {
-        // $products = ProductModel::paginate(6);
         $products = ProductModel::simplePaginate(6);
         return view('search', compact('products'));
     }
@@ -64,9 +64,16 @@ class PageController extends Controller
     }
 
     public function cartInput(Request $request) {
+
         $stock = ProductModel::where('id', $request->product_id)
                             ->get('product.stock');
-
+        foreach($stock as $stock) {
+            $max = $stock->stock;
+        }
+        
+        $cartValidation = $request->validate([
+            'quantity' => ['required', 'gte:1', 'lte:' .$max]
+        ]);                   
         $transaction = 0;
 
         // , 'max:' .$stock, 
@@ -148,11 +155,11 @@ class PageController extends Controller
 
         $products['category_id'] = $request->category;
 
-        // $image =  $request->file('image');
-        // $name = time() . '.' . $image->getClientOriginalExtension();;
-        // $location = 'images/' . $name;
-        // Storage::putFileAs('public/images', $image, $name);
-        $products['image'] = $request->stock;
+        $image =  $request->file('image');
+        $name = time() . '.' . $image->getClientOriginalExtension();;
+        $location = 'images/' . $name;
+        Storage::putFileAs('public/images', $image, $name);
+        $products['image'] = $location;
 
         ProductModel::create($products);
 
