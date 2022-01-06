@@ -72,7 +72,7 @@ class PageController extends Controller
         $cartValidation = $request->validate([
             'quantity' => ['required', 'gte:1', 'lte:' .$max]
         ]);
-        $transaction = 0;
+        $transaction = TransactionModel::latest('created_at')->first();
 
         DetailTransactionModel::create([
             'transaction_id' => $transaction->id,
