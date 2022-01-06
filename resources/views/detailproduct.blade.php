@@ -5,7 +5,7 @@
 @section('content')
 <div class="detail container-fluid">
     @foreach ($details as $det)
-        <img src="{{ $det->image }}" style="width: 20vw; height: 50vh;" alt="">
+        <img src="{{ Storage::url($det->image) }}" style="width: 20vw; height: 50vh;" alt="">
         <h2 style="margin: 3vh 0">{{ $det->title }}</h2>
         <h5 style="margin: 0 0 3vh 0">Description: <br>{{$det->description}}</h5>
         <h5 style="margin: 0 0 3vh 0">Stock: <br>{{$det->stock}} piece(s)</h5>
