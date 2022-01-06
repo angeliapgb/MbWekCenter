@@ -56,31 +56,4 @@ class LoginController extends Controller
         }
     }
 
-    // public function rememberToken(Request $request)
-    // {
-    //     $remember = $request->remember ? true : false;
-
-    //     if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
-    //         return redirect ('home');
-    //     }
-
-    //     return redirect('auth.login');
-    // }
-
-    // public function login(Request $request)
-    // {
-    //     $remember = $request->remember ? true : false;
-
-    //     if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
-    //         $this->setRememberMeExpiration($user);
-    //         return redirect ('home');
-    //     }
-    //     else {
-    //         return Redirect::to('auth.login')
-    //         ->withInput(Input::except('password'))
-    //         ->with('flash_notice', 'Your username/password combination was incorrect.');
-    //     }
-    //     return redirect('home');
-    // }
-
 }
