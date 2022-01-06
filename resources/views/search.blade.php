@@ -9,7 +9,6 @@
             <label class="form-label" style="margin:0 5%;">Search:</label>
             <select class="form-control" name="category" style="width: 10%;">
                 @foreach($category as $c)
-                {{-- masih gabisa --}}
                 <option value="{{ $c->category_name }}">
                     <a href="/products/category/{{ $c->id }}">{{ $c->category_name }}</a>
                 </option>
@@ -39,7 +38,9 @@
         </div>
     </div>
     @endforeach
-    {{-- {{ $products->links() }} --}}
 </div>
 
+<div>
+    {{ $products->links() }}
+</div>
 @endsection

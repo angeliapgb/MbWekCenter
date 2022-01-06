@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
-    public function search() {
-        $products = ProductModel::simplePaginate(6);
-        return view('search', compact('products'));
-    }
 
     public function profile() {
         return view('profile');
@@ -35,7 +31,7 @@ class PageController extends Controller
                         'password' => Hash::make($request['password']),
                         'gender' => $request->gender,
                     ]);
-                    
+
         return redirect('profile');
     }
 
@@ -45,7 +41,7 @@ class PageController extends Controller
         $products = ProductModel::join('category', 'category.id', 'product.category_id')
                                 ->where('title', 'like', '%' . request('search_query') . '%')
                                 ->where('category_name', $query2)
-                                ->get();
+                                ->paginate(6);
 
         return view('products', ['products' => $products]);
     }
@@ -70,13 +66,13 @@ class PageController extends Controller
         foreach($stock as $stock) {
             $max = $stock->stock;
         }
-        
+
         $cartValidation = $request->validate([
             'quantity' => ['required', 'gte:1', 'lte:' .$max]
-        ]);                   
+        ]);
         $transaction = 0;
 
-        // , 'max:' .$stock, 
+        // , 'max:' .$stock,
         // dd($cartValidation);
         // TransactionModel::create([]);
         // $transaction += 1;

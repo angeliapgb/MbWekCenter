@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
             'description' => 'Ayam kampung berkualitas yang dirawat dengan baik, siap potong.',
             'price' => 35000,
             'stock' => 210,
-            'image' => 'images/minion.jpg'],
+            'image' => 'images/Ayam Kampung.jpeg'],
 
             ['id' => 2,
             'category_id' => 1,
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
             'description' => 'Ayam negeri berkualitas yang dirawat dengan baik, bisa dikembang biakan kembali.',
             'price' => 21500,
             'stock' => 500,
-            'image' => 'images/minion.jpg'],
+            'image' => 'images/Ayam Negeri.jpg'],
 
             ['id' => 3,
             'category_id' => 1,
@@ -37,7 +37,7 @@ class ProductSeeder extends Seeder
             'description' => 'Sapi berkualitas yang berumur 4 - 6 tahun.',
             'price' => 13500000,
             'stock' => 20,
-            'image' => 'images/minion.jpg'],
+            'image' => 'images/Sapi Pedaging.jpg'],
 
             ['id' => 4,
             'category_id' => 1,
@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
             'description' => 'Kambing berkualitas yang berumur 2 - 3 tahun.',
             'price' => 3500000,
             'stock' => 80,
-            'image' => 'images/minion.jpg'],
+            'image' => 'images/Kambing Cilik.jpg'],
 
             ['id' => 5,
             'category_id' => 2,
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
             'description' => 'Susu kambing segar tanpa diolah dan alami.',
             'price' => 10000,
             'stock' => 250,
-            'image' => 'images/minion.jpg'],
+            'image' => 'images/Susu Kambing.jpg'],
 
             ['id' => 6,
             'category_id' => 3,
@@ -61,7 +61,7 @@ class ProductSeeder extends Seeder
             'description' => 'Telur ayam kampung berkualitas.',
             'price' => 30000,
             'stock' => 340,
-            'image' => 'images/minion.jpg']
+            'image' => 'images/Telur ayam kampung.jpg']
 
         ]);
     }

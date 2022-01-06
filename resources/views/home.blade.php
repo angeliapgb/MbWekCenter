@@ -12,7 +12,7 @@
         @else --}}
             <img src="{{ Storage::url($p->image) }}" class="card-img-top" style="width: 20rem; height: 20rem;" alt="...">
         {{-- @endif --}}
-        
+
         <div class="card-body">
           <h5 class="card-title">{{ $p->title }}</h5>
           <p class="card-text">{{ $p->description }}</p>

@@ -34,9 +34,10 @@ class HomeController extends Controller
 
     public function search()
     {
+
         $category = ProductModel::join('category', 'product.id', 'category.id')
                                 ->get('category.category_name', 'category.id');
 
-        return view('search', ['products' => ProductModel::all(), 'category' => $category]);
+        return view('search', ['products' => ProductModel::paginate(6), 'category' => $category]);
     }
 }
