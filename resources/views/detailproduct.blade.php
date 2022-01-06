@@ -22,7 +22,12 @@
             <input id="user_id" type="hidden" value="{{ auth()->user()->id }}" name="user_id">
             <div class="addcart d-flex justify-content-evenly">
                 <label class="form-label" style="margin:0 5%;">Quantity: </label>
-                <input id="quantity" type="text" name="quantity" class="form-control" style="width: 50%; margin:0 2%;">
+                <input id="quantity" type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror" style="width: 50%; margin:0 2%;">
+                @error('quantity')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

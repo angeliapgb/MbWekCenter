@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="cart">
-        <h2>Transaction</h2>
+        <h2>Transaction Detail</h2>
         <table class="table">
             <thead>
                 <tr>

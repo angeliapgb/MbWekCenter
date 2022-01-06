@@ -11,4 +11,8 @@ class Transaction extends Model
 
     protected $table = "transaction";
     protected $guarded = [];
+
+    public function transaction(){
+        return $this->hasOne(DetailTransaction::class);
+    }
 }

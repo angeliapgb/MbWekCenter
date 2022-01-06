@@ -30,6 +30,7 @@
                             <td>{{ $cart->quantity }}</td>
                             <td>{{ $cart->price*$cart->quantity }}</td>
                             <input type="hidden" value="{{ $sum+=$cart->price*$cart->quantity }}">
+                            <input type="hidden" value="{{ $cart->id }}" name="transaction_id">
                             <td>
                                 <form action="{{ route('cartDelete', $cart->id) }}" method="POST">
                                     @csrf
@@ -47,17 +48,19 @@
             </tbody>
         </table>
         <p>Grand Total {{ $sum }},-</p>
-        @if($cart != null)
+        {{-- @if($cart != null) --}}
             <form action="{{ route('checkout') }}" method="POST">
                 @csrf
-                    <input name="id" type="hidden" value="{{ $cart->id }}">
-
+                    @foreach ($products as $product)
+                        <input type="hidden" value="{{ $product->id }}" name="id">
+                    @endforeach
                     <button type="submit" class="btn btn-primary">
                         {{ __('Checkout') }}
+                        <?php Session::forget('cart'); ?>
                     </button>
-            </form>
-        @else
-        @endif
+                </form>
+        {{-- @else
+        @endif --}}
         
     </div>
 </div>

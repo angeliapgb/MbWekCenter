@@ -7,7 +7,12 @@
 <div class="d-flex justify-content-evenly flex-wrap">
     @foreach($products as $p)
     <div class="card mt-5" style="width: 20rem; margin-left: 5rem; margin-bottom: 2rem;">
-        <img src="{{ $p->image }}" class="card-img-top" style="width: 20rem; height: 20rem;" alt="...">
+        @if($p->image)
+            <img src="{{ $p->image }}" class="card-img-top" style="width: 20rem; height: 20rem;" alt="...">
+        @else
+            <img src="{{asset('/storage/images/').$p->image}}" class="card-img-top" style="width: 20rem; height: 20rem;" alt="...">
+        @endif
+        
         <div class="card-body">
           <h5 class="card-title">{{ $p->title }}</h5>
           <p class="card-text">{{ $p->description }}</p>

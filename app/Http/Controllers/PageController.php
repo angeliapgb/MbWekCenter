@@ -8,11 +8,14 @@ use App\Models\Product as ProductModel;
 use App\Models\Category as CategoryModel;
 use App\Models\DetailTransaction as DetailTransactionModel;
 use App\Models\Transaction as TransactionModel;
+use Illuminate\Support\Facades\Hash;
 
 class PageController extends Controller
 {
     public function search() {
-        return view('search');
+        // $products = ProductModel::paginate(6);
+        $products = ProductModel::simplePaginate(6);
+        return view('search', compact('products'));
     }
 
     public function profile() {
@@ -20,32 +23,21 @@ class PageController extends Controller
     }
 
     public function updateProfile(Request $request) {
+        $user = $request->validate([
+            'name' => 'required|max:30',
+            'password' => 'required|min:8|confirmed',
+            'gender' => 'sometimes|required',
+        ]);
+
         UserModel::where('id', '=', $request->id)
-                    ->validate($request, [
-                        'name' => 'required|max:30',
-                        'password' => 'required|min:8',
-                        'gender' => 'required',
-                    ])
                     ->update([
                         'name' => $request->name,
-                        'password' => $request->password,
+                        'password' => Hash::make($request['password']),
                         'gender' => $request->gender,
                     ]);
+                    
         return redirect('profile');
     }
-
-    // public function update(Request $request, $id) {
-    //     $users = User::all();
-    //     $users = DB::table('users')
-    //     ->where('id',$request->id)
-    //     ->update([
-    //         'name' => $request->name,
-    //         'password' => $request->password,
-    //         'gender' => $request->gender,
-    //     ]);
-
-    //     return view('profile', compact('users'));
-    // }
 
     public function searchProduct(){
         $query = request('search_query');
@@ -72,11 +64,23 @@ class PageController extends Controller
     }
 
     public function cartInput(Request $request) {
+        $stock = ProductModel::where('id', $request->product_id)
+                            ->get('product.stock');
+
+        $transaction = 0;
+
+        // , 'max:' .$stock, 
+        // dd($cartValidation);
+        // TransactionModel::create([]);
+        // $transaction += 1;
+
         DetailTransactionModel::create([
+            'transaction_id' => 1,
             'product_id' => $request->product_id,
             'user_id' => $request->user_id,
             'quantity' => $request->quantity,
         ]);
+
         return redirect('cart');
     }
 
@@ -86,16 +90,26 @@ class PageController extends Controller
     }
 
     public function checkout(Request $request) {
-        TransactionModel::create([
-            'detail_transaction_id' => $request->id
-        ]);
+        $products = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
+                                        ->where('user_id', '=', auth()->user()->id)
+                                        ->get('detail_transaction.id');
+        $checkout = array();
+        foreach($products as $p) {
+            if(!empty($p)) {
+                $checkout[] = [
+                    $products,
+                ];
+            }
+        }
+        TransactionModel::create(array(
+        ));
         return redirect('transaction');
     }
 
     public function detail($id) {
-        $data = TransactionModel::join('detail_transaction', 'detail_transaction.id', 'transaction.detail_transaction_id')
+        $data = DetailTransactionModel::join('transaction', 'transaction.id', 'detail_transaction.transaction_id')
                                 ->join('product', 'product.id', 'detail_transaction.product_id')
-                                ->where('transaction.id', $id)
+                                ->where('detail_transaction.transaction_id', $id)
                                 ->get(['product.title', 'product.description', 'product.price', 'detail_transaction.quantity', 'detail_transaction.id']);
         return view('detailtransaction', compact('data'));
     }
@@ -103,9 +117,13 @@ class PageController extends Controller
     public function cart() {
         $cart = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
                                 ->join('product', 'product.id', 'detail_transaction.product_id')
-                                ->where('user_id', auth()->user()->id)
+                                ->where('user_id', '=', auth()->user()->id)
                                 ->get(['product.title', 'product.price', 'detail_transaction.quantity', 'detail_transaction.id']);
-        return view('cart', compact('cart'));
+
+        $products = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
+                                ->where('user_id', '=', auth()->user()->id)
+                                ->get('detail_transaction.id');
+        return view('cart', compact('cart', 'products'));
     }
 
     public function cartDelete($id) {
@@ -120,14 +138,24 @@ class PageController extends Controller
     }
 
     public function insertProduct(Request $request) {
-        $products = ProductModel::create([
-            'category_id' => $request->category,
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'image' => $request->image,
+
+        $products = $request->validate([
+            'title' => ['required', 'min:5', 'max:25'],
+            'description' => ['required', 'min:10', 'max:100'],
+            'price' => ['required', 'min:1000', 'max:10000000', 'numeric'],
+            'stock' => ['required', 'min:1', 'numeric'],
         ]);
+
+        $products['category_id'] = $request->category;
+
+        // $image =  $request->file('image');
+        // $name = time() . '.' . $image->getClientOriginalExtension();;
+        // $location = 'images/' . $name;
+        // Storage::putFileAs('public/images', $image, $name);
+        $products['image'] = $request->stock;
+
+        ProductModel::create($products);
+
         return redirect('insert');
     }
 
@@ -139,15 +167,23 @@ class PageController extends Controller
     }
 
     public function updateProduct(Request $request) {
-        $products = ProductModel::where('id', $request->product_id)
-                        ->update([
-                            'category_id' => $request->category,
-                            'title' => $request->title,
-                            'description' => $request->description,
-                            'price' => $request->price,
-                            'stock' => $request->stock,
-                            'image' => $request->image,
-                        ]);
+        if($request->hasFile('image')){
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('images',$filename,'public');
+            ProductModel::where('id', $request->product_id)
+                        ->update(['image'=>$filename]);
+        }
+
+        $products = $request->validate([
+            'title' => ['required', 'min:5', 'max:25'],
+            'description' => ['required', 'min:10', 'max:100'],
+            'price' => ['required', 'min:1000', 'max:10000000', 'numeric'],
+            'stock' => ['required', 'min:1', 'numeric'],
+        ]);
+
+        ProductModel::where('id', $request->product_id)
+                        ->update($products);
+
         return redirect('home');
     }
 
