@@ -97,10 +97,6 @@
                                             {{ __('Insert Product') }}
                                         </a>
 
-                                        {{-- <a class="dropdown-item" href="{{ route('update', $products->title) }}">
-                                            {{ __('Update Product') }}
-                                        </a> --}}
-
                                         <a class="dropdown-item" href="{{ route('manage') }}">
                                             {{ __('Manage User') }}
                                         </a>

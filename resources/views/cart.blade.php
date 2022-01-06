@@ -48,7 +48,6 @@
             </tbody>
         </table>
         <p>Grand Total {{ $sum }},-</p>
-        {{-- @if($cart != null) --}}
             <form action="{{ route('checkout') }}" method="POST">
                 @csrf
                     @foreach ($products as $product)
@@ -59,8 +58,6 @@
                         <?php Session::forget('cart'); ?>
                     </button>
             </form>
-        {{-- @else
-        @endif --}}
 
     </div>
 </div>

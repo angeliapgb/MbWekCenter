@@ -39,7 +39,7 @@ class PageController extends Controller
         $query = request('search_query');
         $query2 = request('category');
         $category = ProductModel::join('category', 'product.id', 'category.id')
-        ->get('category.category_name', 'category.id');
+                                ->get('category.category_name', 'category.id');
 
         $products = ProductModel::join('category', 'category.id', 'product.category_id')
                                 ->where('title', 'like', '%' . request('search_query') . '%')
@@ -74,11 +74,6 @@ class PageController extends Controller
         ]);
         $transaction = 0;
 
-        // , 'max:' .$stock,
-        // dd($cartValidation);
-        // TransactionModel::create([]);
-        // $transaction += 1;
-
         DetailTransactionModel::create([
             'transaction_id' => $transaction->id,
             'product_id' => $request->product_id,
@@ -100,16 +95,6 @@ class PageController extends Controller
         $products = DetailTransactionModel::join('users', 'users.id', 'detail_transaction.user_id')
                                         ->where('user_id', '=', auth()->user()->id)
                                         ->get('detail_transaction.id');
-        // $checkout = array();
-        // foreach($products as $p) {
-        //     if(!empty($p)) {
-        //         $checkout[] = [
-        //             $products,
-        //         ];
-        //     }
-        // }
-        // TransactionModel::create(array(
-        // ));
         TransactionModel::create();
         return redirect('transaction');
     }
@@ -179,19 +164,20 @@ class PageController extends Controller
     }
 
     public function updateProduct(Request $request) {
-        if($request->hasFile('image')){
-            $filename = $request->image->getClientOriginalName();
-            $request->image->storeAs('images',$filename,'public');
-            ProductModel::where('id', $request->product_id)
-                        ->update(['image'=>$filename]);
-        }
-
         $products = $request->validate([
             'title' => ['required', 'min:5', 'max:25'],
             'description' => ['required', 'min:10', 'max:100'],
             'price' => ['required', 'min:1000', 'max:10000000', 'numeric'],
             'stock' => ['required', 'min:1', 'numeric'],
         ]);
+
+        $products['category_id'] = $request->category;
+
+        $image =  $request->file('image');
+        $name = time() . '.' . $image->getClientOriginalExtension();;
+        $location = 'images/' . $name;
+        Storage::putFileAs('public/images', $image, $name);
+        $products['image'] = $location;
 
         ProductModel::where('id', $request->product_id)
                         ->update($products);
